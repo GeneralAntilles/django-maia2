@@ -27,7 +27,7 @@ class Questionnaire(ModelMeta, models.Model):
                                       null=True, blank=True)
 
     _metadata = {
-        'title': 'Abelify',
+        'title': 'get_meta_title',
         'description': 'get_meta_description',
         'keywords': ['Python', 'Django', 'open source', 'questionnaire'],
         'image': 'get_meta_image',
@@ -46,7 +46,16 @@ class Questionnaire(ModelMeta, models.Model):
         return self.question_set.count()
 
     def get_meta_image(self):
-        return self.preview_image.url if self.preview_image else 'media/630.png'
+        if self.preview_image:
+            return self.preview_image.url
+        from django.conf import settings
+        return getattr(settings, 'MAIA2_META_IMAGE', 'media/630-maia-v2.png')
+
+    def get_meta_title(self):
+        # Overridable by the host project (e.g. the abelify site sets its own
+        # name); defaults to the questionnaire's own display name.
+        from django.conf import settings
+        return getattr(settings, 'MAIA2_SITE_NAME', None) or self.display_name
 
     def get_meta_description(self):
         return self.description

@@ -22,9 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The Multidimensional Assessment of Interoceptive Awareness (MAIA), while not
-included in this repository, is referenced and the scoring instructions are
-implemented as part of the web application. Their license is as follows:
+The Multidimensional Assessment of Interoceptive Awareness (MAIA) item text is
+included in this repository (see maia_v2/fixtures/maia2_questions.json and the
+accompanying maia_v2/fixtures/MAIA2_NOTICE.txt) under UCSF's free-use terms,
+reproduced unmodified, and the scoring instructions are implemented as part of
+the application. The MAIA itself is NOT covered by the MIT license above; its
+terms are as follows:
 
 Multidimensional Assessment of Interoceptive Awareness
 Copyright (c) 2018 University of California San Francisco

@@ -1,0 +1,18 @@
+MAIA-2 questionnaire content notice
+===================================
+
+The Multidimensional Assessment of Interoceptive Awareness, Version 2
+(MAIA-2) item text contained in `maia2_questions.json` is:
+
+    Copyright (c) 2018 University of California San Francisco
+    https://osher.ucsf.edu/maia/
+
+It is included here under UCSF's free-use terms — the survey is available
+without charge and no written permission is required for its use. The item
+wording is reproduced unmodified.
+
+This content is NOT covered by this repository's MIT license. If you use the
+MAIA-2, please refer to it by its full name — Multidimensional Assessment of
+Interoceptive Awareness — provide the appropriate citation, and refer to the
+source document at https://osher.ucsf.edu/maia/ for the most recent version
+and scoring instructions. See the repository LICENSE for the full terms.

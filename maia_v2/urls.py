@@ -1,12 +1,8 @@
-from django.conf import settings
 from django.urls import path
-from django.conf.urls.static import static
 
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about/', views.AboutView.as_view(), name='about'),
     path(
         'questionnaire/<str:questionnaire>/',
         views.QuestionnaireFormView.as_view(),
@@ -37,4 +33,4 @@ urlpatterns = [
         views.APIQuestionnaireStatsView.as_view(),
         name='questionnaire-stats',
     ),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

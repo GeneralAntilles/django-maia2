@@ -4,15 +4,11 @@
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
 <html lang="en">
-    <head {% meta_namespaces %}>
+    {% if meta %}<head {% meta_namespaces %}>{% else %}<head>{% endif %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% include 'meta/meta.html' %}
-        <link rel="icon" href="{% static 'media/favicon.png' %}" type="image/png">
-        <link rel="icon" href="{% static 'media/icon.svg' %}"" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="{% static 'media/apple-touch-icon.png' %}">
-        <link rel="manifest" href="{% static 'media/manifest.webmanifest' %}">
-        <title>{% block head_title %}{% endblock %}</title>
+        {% if meta %}{% include 'meta/meta.html' %}{% endif %}
+        <title>{% block head_title %}MAIA-2{% endblock %}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Arima&display=swap" rel="stylesheet">
@@ -23,27 +19,6 @@
         {% block js %}{% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'index' %}"><img class="logo" src="{% static 'media/icon.svg' %}" alt=""><span>{{ current_site.name }}</span></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link{% if request.resolver_match.url_name == 'index' %} active{% endif %}" aria-current="page" href="{% url 'index' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link{% if request.resolver_match.url_name == 'about' %} active{% endif %}" href="{% url 'about' %}">About</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
         {% block content %}(no content){% endblock %}
-        <footer class="footer">
-            <a href="https://github.com/GeneralAntilles/maia"><span class="iconify" data-icon="mdi-github"></span></a>
-        </footer>
     </body>
 </html>

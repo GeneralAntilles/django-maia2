@@ -9,7 +9,9 @@
     <h1>{{ questionnaire.display_name }}</h1>
     <p>{{ questionnaire.description }}</p>
     <p>{{ questionnaire.instructions }}</p>
+    <button id="randomize" class="btn btn-primary">Randomize</button>
     {% crispy form %}
+    {{ form.errors }}
     <p class="total">Total score: <span id="total-score">-</span></p>
     <div id="score" class="score-container">
         {% for category in categories %}

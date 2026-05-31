@@ -1,0 +1,58 @@
+[
+{
+  "model": "maia_v2.questionnairedata",
+  "pk": 1,
+  "fields": {
+    "questionnaire": 1,
+    "name": "Museum visitors",
+    "internal_name": "maia_museum",
+    "paper_name": "The Multidimensional Assessment of Interoceptive Awareness, Version 2 (MAIA-2)",
+    "description": "A sample of 1,090 museum visitors in the UK. This is the MAIA v2 paper.",
+    "source": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0208034",
+    "score": 2.82,
+    "scores": "{\r\n    \"noticing\": 3.34,\r\n    \"not-distracting\": 2.06,\r\n    \"not-worrying\": 2.52,\r\n    \"attention_regulation\": 2.84,\r\n    \"emotional_awareness\": 3.44,\r\n    \"self-regulation\": 2.78,\r\n    \"body_listening\": 2.20,\r\n    \"trusting\": 3.37\r\n}"
+  }
+},
+{
+  "model": "maia_v2.questionnairedata",
+  "pk": 2,
+  "fields": {
+    "questionnaire": 1,
+    "name": "Hospital pre-treatment",
+    "internal_name": "hospital_pre",
+    "paper_name": "Validation of the Multidimensional Assessment of Interoceptive Awareness (MAIA-2) questionnaire in hospitalized patients with major depressive disorder",
+    "description": "110 hospitalized patients with major depressive disorder, pre-treatment",
+    "source": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0253913",
+    "score": 2.18,
+    "scores": "{\r\n    \"noticing\": 2.92,\r\n    \"not-distracting\": 1.67,\r\n    \"not-worrying\": 2.03,\r\n    \"attention_regulation\": 2.05,\r\n    \"emotional_awareness\": 3.35,\r\n    \"self-regulation\": 1.66,\r\n    \"body_listening\": 1.56,\r\n    \"trusting\": 2.17\r\n}"
+  }
+},
+{
+  "model": "maia_v2.questionnairedata",
+  "pk": 3,
+  "fields": {
+    "questionnaire": 1,
+    "name": "Hospital post-treatment",
+    "internal_name": "hospital_post",
+    "paper_name": "Validation of the Multidimensional Assessment of Interoceptive Awareness (MAIA-2) questionnaire in hospitalized patients with major depressive disorder",
+    "description": "87 hospitalized patients with major depressive disorder, post-treatment",
+    "source": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0253913",
+    "score": 2.81,
+    "scores": "{\r\n    \"noticing\": 3.32,\r\n    \"not-distracting\": 2.07,\r\n    \"not-worrying\": 2.50,\r\n    \"attention_regulation\": 2.74,\r\n    \"emotional_awareness\": 3.68,\r\n    \"self-regulation\": 2.52,\r\n    \"body_listening\": 2.49,\r\n    \"trusting\": 3.05\r\n}"
+  }
+},
+{
+  "model": "maia_v2.questionnairedata",
+  "pk": 4,
+  "fields": {
+    "questionnaire": 1,
+    "name": "Social media",
+    "internal_name": "social_media",
+    "paper_name": "Examining the Factor Structure and Validity of the Multidimensional Assessment of Interoceptive Awareness",
+    "description": "644 and 1,516 participants from two studies gathered social media sources and an online newspaper covering psychology-related subjects, respectively.",
+    "source": "https://doi.org/10.1080/00223891.2020.1813147",
+    "score": 3.01,
+    "scores": "{\r\n    \"noticing\": 3.78,\r\n    \"not-distracting\": 2.35,\r\n    \"not-worrying\": 2.30,\r\n    \"attention_regulation\": 3.00,\r\n    \"emotional_awareness\": 3.74,\r\n    \"self-regulation\": 2.70,\r\n    \"body_listening\": 2.72,\r\n    \"trusting\": 3.45\r\n}"
+  }
+}
+]

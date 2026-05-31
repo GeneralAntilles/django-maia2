@@ -7,8 +7,8 @@ import numpy as np
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import View
-from meta.views import Meta
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,45 +16,6 @@ from .forms import get_questionnaire_form
 from .models import (Question, QuestionCategory, QuestionResponse,
                      Questionnaire, QuestionnaireResponse,
                      Respondent, QuestionnaireData)
-
-
-meta = Meta(
-    title='Abelify',
-    description='A collection of hobby projects by Ryan Abel.',
-    keywords=['Python', 'Django', 'open source', 'questionnaire'],
-    image='media/630.png',
-    use_sites=True,
-    og_type='website',
-    use_og=True,
-    use_twitter=True,
-)
-
-
-def index(request):
-    questionnaires = Questionnaire.objects.filter(published=True)
-    meta.url = '/'
-
-    return render(
-        request,
-        'maia_v2/index.html',
-        {
-            'questionnaires': questionnaires,
-            'current_site': Site.objects.get_current(),
-            'meta': meta,
-        },
-    )
-
-
-class AboutView(View):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.current_site = Site.objects.get_current()
-
-    def get(self, request):
-        return render(
-            request, 'maia_v2/about.html',
-            {'current_site': self.current_site},
-        )
 
 
 class QuestionnaireFormView(View):
@@ -67,14 +28,14 @@ class QuestionnaireFormView(View):
         self.form = None
 
     def get(self, request, questionnaire):
-        self.form = get_questionnaire_form(questionnaire)
+        form_class = get_questionnaire_form(questionnaire)
         self.get_questionnaire_data(questionnaire)
 
         response = {
             'questionnaire': self.questionnaire,
             'questions': self.questions,
             'categories': self.categories,
-            'form': self.form,
+            'form': form_class(),
             'current_site': self.current_site,
             'meta': self.questionnaire.as_meta(request),
         }
@@ -82,15 +43,15 @@ class QuestionnaireFormView(View):
         return render(request, f'maia_v2/{questionnaire}.html', response)
 
     def post(self, request, questionnaire):
-        self.form = get_questionnaire_form(questionnaire)
+        form_class = get_questionnaire_form(questionnaire)
         self.get_questionnaire_data(questionnaire)
 
-        form_submission = self.form(request.POST)
+        form_submission = form_class(request.POST)
         response = {
             'questionnaire': self.questionnaire,
             'questions': self.questions,
             'categories': self.categories,
-            'form': self.form,
+            'form': form_submission,
             'current_site': self.current_site,
         }
 
@@ -132,7 +93,10 @@ class QuestionnaireFormView(View):
             for question_response in question_responses.values():
                 question_response.save()
 
-            return HttpResponseRedirect(f'/questionnaire/{questionnaire}/results/{respondent.fingerprint}/')
+            return HttpResponseRedirect(reverse(
+                'questionnaire-results',
+                kwargs={'questionnaire': questionnaire,
+                        'respondent': respondent.fingerprint}))
         else:
             return render(request, f'maia_v2/{questionnaire}.html', response)
 

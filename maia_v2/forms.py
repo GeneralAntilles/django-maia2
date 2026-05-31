@@ -1,5 +1,6 @@
 import textwrap
 from django import forms
+from django.urls import reverse
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Div, HTML, Fieldset, Layout, Submit
@@ -20,11 +21,14 @@ def get_questionnaire_form(questionnaire):
     if questionnaire == 'maia_v2':
         return MAIAForm
 
+
 class MAIAForm(forms.ModelForm):
     """
     Form for the MAIA v2 questionnaire.
 
     This form is dynamically generated from the questions in the database.
+    Fields are built in ``__init__`` (not at class-definition time) so the
+    module stays importable before the database is migrated/seeded.
     """
     class Meta:
         model = QuestionnaireResponse
@@ -35,23 +39,23 @@ class MAIAForm(forms.ModelForm):
         True: ((5, ''), (4, ''), (3, ''), (2, ''), (1, ''), (0, ''))
     }
 
-    for question in Question.objects.all():
-        locals()[str(question.id)] = forms.IntegerField(
-            label=f'{question.id}. {question.text}',
-            min_value=0, max_value=5,
-            required=question.required,
-            widget=forms.RadioSelect(
-                choices=radio_choices[question.reverse_score]),
-        )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
 
+        for question in Question.objects.all():
+            self.fields[str(question.id)] = forms.IntegerField(
+                label=f'{question.id}. {question.text}',
+                min_value=0, max_value=5,
+                required=question.required,
+                widget=forms.RadioSelect(
+                    choices=self.radio_choices[question.reverse_score]),
+            )
+
+        self.helper = FormHelper()
         self.helper.form_id = 'maia-v2'
         self.helper.form_method = 'post'
-        self.helper.form_action = (
-            f'/questionnaire/maia_v2/submit/')
+        self.helper.form_action = reverse(
+            'questionnaire-submit', kwargs={'questionnaire': 'maia_v2'})
         self.helper.wrapper_class = 'form-group'
 
         self.helper.layout = Layout()

@@ -7,12 +7,12 @@ name = "django-maia2"
 version = "0.1.0"
 description = "A reusable Django app implementing the MAIA-2 interoceptive awareness questionnaire."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [{ name = "Ryan Abel" }]
 keywords = ["django", "questionnaire", "maia", "interoception", "psychometrics"]
 dependencies = [
-    "Django>=4.1",
+    "Django>=5.2,<6.0",
     "django-meta",
     "djangorestframework",
     "django-crispy-forms",

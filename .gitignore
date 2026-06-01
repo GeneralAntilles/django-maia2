@@ -1,6 +1,7 @@
-# Bootstrap source (vendored SCSS, not redistributed); compiled main.css IS tracked
+# Build artifacts — vendored Bootstrap + compiled CSS are produced at build
+# time (dart-sass), never committed. SCSS sources under static/scss/ are tracked.
 maia_v2/static/bootstrap/
-# Source map references the gitignored SCSS sources — not shipped, not tracked
+maia_v2/static/css/main.css
 maia_v2/static/css/main.css.map
 
 # Byte-compiled / optimized / DLL files

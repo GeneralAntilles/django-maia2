@@ -4,6 +4,13 @@ Notable changes to **django-maia2**, newest first, in plain language.
 This project follows [semantic versioning](https://semver.org/). Each release
 below corresponds to a `vX.Y.Z` git tag and a published wheel.
 
+## 0.1.5 - 2026-06-06
+
+- Refreshed the page styling: content now sits on a clean white panel against a
+  soft blue-grey background (the navigation bar and footer share that
+  background), and the footer reliably stays at the bottom of the window even on
+  short pages.
+
 ## 0.1.4 - 2026-06-06
 
 - Lined the questionnaire's answer buttons up directly under their 0–5 scale

@@ -55,8 +55,23 @@ jobs:
             exit 1
           fi
           echo "OK: wheel contains maia_v2/static/css/main.css"
+      - name: Extract plain-language notes from CHANGELOG.md
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          # Pull the section under "## <version> " up to the next "## " heading.
+          awk -v ver="$VERSION" '
+            index($0, "## " ver " ") == 1 { flag=1; next }
+            flag && /^## / { exit }
+            flag { print }
+          ' CHANGELOG.md > RELEASE_NOTES.md
+          if ! grep -q '[^[:space:]]' RELEASE_NOTES.md; then
+            echo "_No CHANGELOG.md entry for ${VERSION}._" > RELEASE_NOTES.md
+            echo "::warning::No CHANGELOG.md section found for ${VERSION}."
+          fi
+          echo "----- release notes -----"; cat RELEASE_NOTES.md
       - name: Publish wheel as Release asset
         uses: softprops/action-gh-release@v3
         with:
           files: dist/*.whl
-          generate_release_notes: true
+          body_path: RELEASE_NOTES.md
+          generate_release_notes: true   # appends the auto "Full Changelog" compare link

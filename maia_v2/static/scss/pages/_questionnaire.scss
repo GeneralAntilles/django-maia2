@@ -120,9 +120,21 @@ fieldset {
         flex-wrap: nowrap;
         padding: 0 0 0 0.5rem;
     }
-    .form-group > label {
+    /* django-crispy-forms >= 2.x wraps each radio group in <fieldset><legend>
+       for accessibility. Flatten that fieldset (display:contents) so its
+       legend (question) + radio container become the flex items of the
+       .form-group row, then lay the radios out horizontally — restoring the
+       old "<label> + flat .form-check" layout the headers row aligns to. */
+    .form-group > fieldset {
+        display: contents;
+    }
+    .form-group > fieldset > legend {
         flex: 0 8 65%;
         padding: 0.2rem;
+    }
+    .form-group > fieldset > div {
+        display: flex;
+        flex-wrap: nowrap;
     }
 }
 

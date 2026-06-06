@@ -1,0 +1,62 @@
+name: release
+
+# Tag a version (e.g. `git tag v0.1.0 && git push origin v0.1.0`) to run the
+# test suite, build a wheel with compiled CSS baked in, verify the CSS is
+# actually inside the wheel, and publish the wheel as a GitHub Release asset.
+# The deployment pins that asset by URL/version.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write  # create the Release and upload the wheel asset
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install (editable, with deps)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+      - name: Migration parity guard
+        run: python manage.py makemigrations --check --dry-run
+      - name: Run test suite
+        run: python manage.py test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile SCSS -> main.css
+        run: bash scripts/build_css.sh
+      - name: Build wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+      - name: Gate — wheel MUST contain compiled main.css
+        run: |
+          if ! unzip -l dist/*.whl | grep -q 'maia_v2/static/css/main.css'; then
+            echo "::error::Wheel is missing maia_v2/static/css/main.css — refusing to release an unstyled wheel."
+            unzip -l dist/*.whl
+            exit 1
+          fi
+          echo "OK: wheel contains maia_v2/static/css/main.css"
+      - name: Publish wheel as Release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.whl
+          generate_release_notes: true

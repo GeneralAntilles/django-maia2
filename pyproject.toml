@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-maia2"
-version = "0.1.0"
+version = "0.1.1"
 description = "A reusable Django app implementing the MAIA-2 interoceptive awareness questionnaire."
 readme = "README.md"
 requires-python = ">=3.10"

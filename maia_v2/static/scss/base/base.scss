@@ -1,19 +1,22 @@
 html {
-    background-color: $bg-color;
-    position: relative;
-    min-height: 100%;
+    background-color: $bg-color;  // window / Safari overscroll color
 }
 body {
+    // Flexbox sticky footer: nav + .content-area + footer stack in a column,
+    // .content-area grows to push the footer to the bottom on short pages.
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $bg-color;  // the nav/footer color, now the window/body color
     color: #002137;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Navbar */
 .navbar {
-    background-color: $bg-color;
+    // No background-color: inherits the body window color ($bg-color).
     border-bottom: 3px solid $accent1;
-    margin: 0 0 1rem 0;
+    margin: 0;  // spacing moved into #content's padding-top (inside the white band)
 }
 .logo {
     height: 54px;
@@ -37,6 +40,14 @@ body {
     color: lighten($text-color, 10%) !important;
 }
 
+/* Full-bleed white content band; grows so the footer sticks to the bottom.
+   Defined before the dark-mode block so the dark override (equal specificity)
+   wins by source order. */
+.content-area {
+    flex: 1 0 auto;
+    background-color: #fff;
+}
+
 @media (prefers-color-scheme: dark) {
     html {
         background-color: $bg-color-dark;
@@ -46,7 +57,7 @@ body {
         color: $text-color-dark;
     }
     .navbar {
-        background-color: #2a313b;
+        // bg inherits the dark body window color ($bg-color-dark)
         border-bottom: 3px solid $accent3;
     }
     .navbar-brand span {
@@ -58,26 +69,28 @@ body {
     .navbar .active {
         color: lighten($text-color-dark, 20%)  !important;
     }
-    .footer {
+    // Dark mode mirrors the light treatment: the content surface is the raised
+    // shade, the chrome (nav/footer) drops back to the darker window color.
+    .content-area {
         background-color: #2a313b;
+    }
+    .footer {
+        // bg inherits the dark body window color ($bg-color-dark)
         border-top: 3px solid #aabbc5;
     }
 }
 
 #content {
-    padding-bottom: 100px;
-    min-height: 100%;
+    padding-top: 1rem;     // replaces the old navbar margin-bottom
+    padding-bottom: 2rem;  // replaces the old position:absolute footer clearance
 }
 /* Footer */
 footer {
-    background-color: $bg-color;
+    // No background-color: inherits the body window color ($bg-color).
     border-top: 3px solid #aabbc5;
     padding: 1.5rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     font-size: 1.5rem;
+    flex-shrink: 0;  // natural flow at the bottom of the flex column
 }
 footer .iconify {
     font-size: 2rem;

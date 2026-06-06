@@ -82,7 +82,7 @@ legend.categories {
         flex: 0 0.3 3rem;
         min-width: 3.55rem;
         padding-left: 1.25rem;
-        text-align: right;
+        text-align: center;
     }
     .headers {
         display: flex;
@@ -111,30 +111,36 @@ fieldset {
     margin-bottom: 1.5rem;
 }
 @media (min-width: 768px) {
-    .form-check {
-        flex: 0 0.3 4rem;
-        padding-left: 1.75rem;
-    }
+    /* Mirror the .headers row exactly so each radio aligns under its number.
+       crispy >= 2.x nests the group as .form-group > fieldset > div > .form-check.
+       display:contents on the fieldset AND its inner div promotes the legend
+       (question) + the six .form-check cells to be direct flex children of
+       .form-group — structurally identical to ".headers > legend + .header". */
     .form-group {
         display: flex;
+        justify-content: space-between;
         flex-wrap: nowrap;
-        padding: 0 0 0 0.5rem;
+        padding: 0 1rem;
     }
-    /* django-crispy-forms >= 2.x wraps each radio group in <fieldset><legend>
-       for accessibility. Flatten that fieldset (display:contents) so its
-       legend (question) + radio container become the flex items of the
-       .form-group row, then lay the radios out horizontally — restoring the
-       old "<label> + flat .form-check" layout the headers row aligns to. */
-    .form-group > fieldset {
+    .form-group > fieldset,
+    .form-group > fieldset > div {
         display: contents;
     }
     .form-group > fieldset > legend {
-        flex: 0 8 65%;
-        padding: 0.2rem;
+        flex: 1;
+        min-width: 20rem;
+        padding: 0.2rem 0 0 0;
     }
-    .form-group > fieldset > div {
+    .form-check {
+        flex: 0 0.3 3rem;
+        min-width: 3.55rem;
+        padding-left: 1.25rem;
         display: flex;
-        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .form-check-input {
+        margin: 0;
     }
 }
 
